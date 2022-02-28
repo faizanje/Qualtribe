@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "488381931723",
+    "firebase_url": "https://qualtribe-default-rtdb.firebaseio.com",
+    "project_id": "qualtribe",
+    "storage_bucket": "qualtribe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:488381931723:android:c6ace26972e2dbea2f7b4e",
+        "android_client_info": {
+          "package_name": "com.example.qualtribe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "488381931723-lmhhng348s7kaatui8fj9lenqf1ph4rr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjVsGfoVA51jKmGj2bmJqOwkOD2ELyXyg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "488381931723-lmhhng348s7kaatui8fj9lenqf1ph4rr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

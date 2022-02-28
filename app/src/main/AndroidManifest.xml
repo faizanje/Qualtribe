@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.qualtribe">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-sdk tools:overrideLibrary="com.github.techinessoverloaded:progress-dialog" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_icon"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/ic_icon"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.QUALTRIBE">
+        <activity android:name=".activities.seller_contact"></activity>
+        <activity android:name=".activities.seller_about" />
+        <activity android:name=".activities.seller_complete_order" />
+        <activity android:name=".activities.seller_order" />
+        <activity
+            android:name=".activities.sellermenu"
+            android:label="@string/title_activity_sellermenu"
+            android:theme="@style/Theme.QUALTRIBE.NoActionBar" />
+        <activity android:name=".activities.sellerinbox" />
+        <activity android:name=".activities.sellerchat" />
+        <activity android:name=".activities.Review" />
+        <activity android:name=".activities.Modification" />
+        <activity android:name=".activities.confirmPayment" />
+        <activity android:name=".activities.payment" />
+        <activity android:name=".activities.loginContact" />
+        <activity android:name=".activities.loginTeam" />
+        <activity android:name=".activities.loginServices" />
+        <activity android:name=".activities.loginAbout" />
+        <activity android:name=".activities.inbox" />
+        <activity android:name=".activities.chat" />
+        <activity android:name=".activities.loginMenu" />
+        <activity android:name=".activities.loginSearch" />
+        <activity android:name=".activities.Search" />
+        <activity android:name=".activities.buyer_menu" />
+        <activity android:name=".activities.Homepage" />
+        <activity android:name=".activities.Please_Login" />
+        <activity android:name=".activities.Contract" />
+        <activity android:name=".activities.PlaceOrder" />
+        <activity android:name=".activities.Seller_Profile" />
+        <activity android:name=".activities.Profile" />
+        <activity android:name=".activities.Packages" />
+        <activity android:name=".activities.Contact" />
+        <activity android:name=".activities.Team" />
+        <activity android:name=".activities.About" />
+        <activity android:name=".activities.Seller_Home" />
+        <activity android:name=".activities.Services" />
+        <activity android:name=".activities.Seller_Login" />
+        <activity android:name=".activities.buyer_signup" />
+        <activity android:name=".activities.buyer_login" />
+        <activity android:name=".activities.Home" />
+        <activity android:name=".activities.Seller_buyer_choice" />
+        <activity android:name=".activities.order_submit" />
+        <activity android:name=".activities.Intro">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activities.MainActivity" />
+    </application>
+
+</manifest>

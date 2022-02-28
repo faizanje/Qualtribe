@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:id="@+id/cardContainer"
+    android:elevation="16dp"
+    android:layout_margin="8dp">
+
+
+    <LinearLayout
+        android:id="@+id/items"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="15dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Price : "
+                android:textColor="@color/blue"
+                android:textSize="20sp"
+                android:textStyle="bold"></TextView>
+
+            <TextView
+                android:id="@+id/orderPKG"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Package selected : "
+                android:textSize="20sp"
+                ></TextView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description : "
+                android:textColor="@color/blue"
+                android:textSize="20sp"
+                android:textStyle="bold"></TextView>
+
+            <TextView
+                android:id="@+id/orderDECS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Package selected : "
+                android:textSize="20sp"
+                ></TextView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Requirements : "
+                android:textColor="@color/blue"
+                android:textSize="20sp"
+                android:textStyle="bold"></TextView>
+
+            <TextView
+                android:id="@+id/orderREQ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Package selected : "
+                android:textSize="20sp"></TextView>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+</androidx.cardview.widget.CardView>
