@@ -163,4 +163,13 @@ public class buyer_login extends AppCompatActivity implements View.OnClickListen
         }
 
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+            startActivity(new Intent(buyer_login.this, Homepage.class));
+
+        }
+    }
 }

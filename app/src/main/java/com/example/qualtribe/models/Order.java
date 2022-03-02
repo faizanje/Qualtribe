@@ -9,17 +9,19 @@ public class Order {
     String orderId;
     String buyerId;
 
-    public Order(String email, String price, String pkgDec, String requirements, String sellerId, String buyerId) {
+    public Order(String email, String price, String pkgDec, String requirements, String sellerId, String orderId, String buyerId) {
         this.email = email;
         this.price = price;
         this.pkgDec = pkgDec;
         this.requirements = requirements;
         this.sellerId = sellerId;
+        this.orderId = orderId;
         this.buyerId = buyerId;
     }
 
     public Order() {
     }
+
 
     public String getBuyerId() {
         return buyerId;

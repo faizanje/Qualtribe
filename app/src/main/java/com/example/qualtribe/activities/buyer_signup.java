@@ -150,7 +150,7 @@ public class buyer_signup extends AppCompatActivity implements View.OnClickListe
                                         prBar.setVisibility(View.VISIBLE);
                                         Toast.makeText(buyer_signup.this, "User has been registered successfully!", Toast.LENGTH_LONG).show();
                                         prBar.setVisibility(View.GONE);
-                                        startActivity(new Intent(buyer_signup.this, Seller_Home.class));
+                                        startActivity(new Intent(buyer_signup.this, Homepage.class));
 
                                     }
                                     else{

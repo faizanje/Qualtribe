@@ -97,8 +97,6 @@ public class seller_order extends AppCompatActivity implements View.OnClickListe
                         orderArrayList.clear();
                         for (DataSnapshot child : snapshot.getChildren()) {
                             Order order = child.getValue(Order.class);
-                            order.setOrderId(child.getKey());
-
                             if (order.getSellerId().equals(myUserId)) {
                                 orderArrayList.add(order);
                             }

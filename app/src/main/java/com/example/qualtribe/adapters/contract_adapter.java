@@ -49,7 +49,14 @@ public class contract_adapter extends RecyclerView.Adapter<contract_adapter.view
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, Modification.class));
+                Intent i = new Intent(context, Modification.class);
+                String orderID  = orders.get(position).getOrderId();
+                i.putExtra("orderID", orderID);
+                String price = orders.get(position).getPrice();
+                String req = orders.get(position).getRequirements();
+                i.putExtra("price", price);
+                i.putExtra("req", req);
+                context.startActivity(i);
             }
         });
 

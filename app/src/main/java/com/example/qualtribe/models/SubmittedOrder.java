@@ -6,23 +6,52 @@ public class SubmittedOrder {
     String orderId;
     String buyerEmail;
     String attachmentUrl;
-
-    public SubmittedOrder() {
-    }
-
-    public SubmittedOrder(String requirements, String orderId) {
-        this.requirements = requirements;
-        this.orderId = orderId;
-    }
+    String status;
+    String modifications;
 
     public SubmittedOrder(String orderId) {
         this.orderId = orderId;
     }
 
-    public SubmittedOrder(String requirements, String orderId, String attachmentUrl) {
+
+    public SubmittedOrder() {
+
+    }
+
+    @Override
+    public String toString() {
+        return "SubmittedOrder{" +
+                "requirements='" + requirements + '\'' +
+                ", orderId='" + orderId + '\'' +
+                ", buyerEmail='" + buyerEmail + '\'' +
+                ", attachmentUrl='" + attachmentUrl + '\'' +
+                ", status='" + status + '\'' +
+                ", modifications='" + modifications + '\'' +
+                '}';
+    }
+
+    public String getModifications() {
+        return modifications;
+    }
+
+    public void setModifications(String modifications) {
+        this.modifications = modifications;
+    }
+
+    public String getRequirements() {
+        return requirements;
+    }
+
+    public void setRequirements(String requirements) {
         this.requirements = requirements;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
         this.orderId = orderId;
-        this.attachmentUrl = attachmentUrl;
     }
 
     public String getBuyerEmail() {
@@ -41,19 +70,20 @@ public class SubmittedOrder {
         this.attachmentUrl = attachmentUrl;
     }
 
-    public String getRequirements() {
-        return requirements;
+    public String getStatus() {
+        return status;
     }
 
-    public void setRequirements(String requirements) {
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public SubmittedOrder(String requirements, String orderId, String buyerEmail, String attachmentUrl, String status, String modifications) {
         this.requirements = requirements;
-    }
-
-    public String getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(String orderId) {
         this.orderId = orderId;
+        this.buyerEmail = buyerEmail;
+        this.attachmentUrl = attachmentUrl;
+        this.status = status;
+        this.modifications = modifications;
     }
 }

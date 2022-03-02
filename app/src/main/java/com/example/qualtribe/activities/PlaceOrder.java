@@ -19,6 +19,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.UUID;
+
 public class PlaceOrder extends AppCompatActivity implements View.OnClickListener {
 
     ImageView home, message, search, order, profile;
@@ -49,8 +51,9 @@ public class PlaceOrder extends AppCompatActivity implements View.OnClickListene
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String uniqueID = UUID.randomUUID().toString();
                 String r = req.getText().toString();
-                Order order = new Order(EMAIL, PRICE, PKGDESC, r, sellerID, FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                Order order = new Order(EMAIL, PRICE, PKGDESC, r, sellerID, uniqueID, FirebaseAuth.getInstance().getCurrentUser().getEmail());
                 Log.i("WISHA", "onClick: " + order);
                 FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
                 DatabaseReference myRef1 = firebaseDatabase.getReference("orders");

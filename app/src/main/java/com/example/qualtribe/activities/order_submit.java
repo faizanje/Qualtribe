@@ -128,6 +128,7 @@ public class order_submit extends AppCompatActivity implements View.OnClickListe
                     return;
                 }
                 submittedOrder.setRequirements(requirements);
+                submittedOrder.setStatus("delivered");
                 submitOrder();
             }
         });
