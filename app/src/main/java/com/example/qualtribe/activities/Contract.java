@@ -37,6 +37,8 @@ public class Contract extends AppCompatActivity implements View.OnClickListener 
     ArrayList<Order> orders = new ArrayList<>();
     String EMAIL;
     FirebaseAuth m;
+    String myUserId;
+    String current_Order_state;
     contract_adapter adapter = new contract_adapter(orders, this);
 
     @Override
@@ -44,6 +46,8 @@ public class Contract extends AppCompatActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contract);
         m = FirebaseAuth.getInstance();
+        myUserId = FirebaseAuth.getInstance().getUid();
+        current_Order_state = "active";
         EMAIL = m.getCurrentUser().getEmail();
         Log.i("WISHA", "onCreate: 00" + EMAIL);
         onPopulateData();

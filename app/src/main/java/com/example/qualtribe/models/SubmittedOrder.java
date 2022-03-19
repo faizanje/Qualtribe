@@ -1,5 +1,9 @@
 package com.example.qualtribe.models;
 
+import com.example.qualtribe.activities.seller_order;
+
+import java.util.ArrayList;
+
 public class SubmittedOrder {
 
     String requirements;
@@ -8,6 +12,19 @@ public class SubmittedOrder {
     String attachmentUrl;
     String status;
     String modifications;
+    String sellerID;
+
+    public SubmittedOrder(seller_order seller_order, ArrayList<SubmittedOrder> orderArrayList1) {
+
+    }
+
+    public String getSellerID() {
+        return sellerID;
+    }
+
+    public void setSellerID(String sellerID) {
+        this.sellerID = sellerID;
+    }
 
     public SubmittedOrder(String orderId) {
         this.orderId = orderId;
@@ -18,17 +35,6 @@ public class SubmittedOrder {
 
     }
 
-    @Override
-    public String toString() {
-        return "SubmittedOrder{" +
-                "requirements='" + requirements + '\'' +
-                ", orderId='" + orderId + '\'' +
-                ", buyerEmail='" + buyerEmail + '\'' +
-                ", attachmentUrl='" + attachmentUrl + '\'' +
-                ", status='" + status + '\'' +
-                ", modifications='" + modifications + '\'' +
-                '}';
-    }
 
     public String getModifications() {
         return modifications;
@@ -70,6 +76,19 @@ public class SubmittedOrder {
         this.attachmentUrl = attachmentUrl;
     }
 
+    @Override
+    public String toString() {
+        return "SubmittedOrder{" +
+                "requirements='" + requirements + '\'' +
+                ", orderId='" + orderId + '\'' +
+                ", buyerEmail='" + buyerEmail + '\'' +
+                ", attachmentUrl='" + attachmentUrl + '\'' +
+                ", status='" + status + '\'' +
+                ", modifications='" + modifications + '\'' +
+                ", sellerID='" + sellerID + '\'' +
+                '}';
+    }
+
     public String getStatus() {
         return status;
     }
@@ -78,12 +97,13 @@ public class SubmittedOrder {
         this.status = status;
     }
 
-    public SubmittedOrder(String requirements, String orderId, String buyerEmail, String attachmentUrl, String status, String modifications) {
+    public SubmittedOrder(String requirements, String orderId, String buyerEmail, String attachmentUrl, String status, String modifications, String sellerID) {
         this.requirements = requirements;
         this.orderId = orderId;
         this.buyerEmail = buyerEmail;
         this.attachmentUrl = attachmentUrl;
         this.status = status;
         this.modifications = modifications;
+        this.sellerID = sellerID;
     }
 }

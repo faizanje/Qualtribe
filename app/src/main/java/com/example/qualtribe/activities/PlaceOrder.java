@@ -53,7 +53,7 @@ public class PlaceOrder extends AppCompatActivity implements View.OnClickListene
             public void onClick(View v) {
                 String uniqueID = UUID.randomUUID().toString();
                 String r = req.getText().toString();
-                Order order = new Order(EMAIL, PRICE, PKGDESC, r, sellerID, uniqueID, FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                Order order = new Order(EMAIL, PRICE, PKGDESC, r, sellerID, uniqueID, FirebaseAuth.getInstance().getCurrentUser().getEmail(), "active");
                 Log.i("WISHA", "onClick: " + order);
                 FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
                 DatabaseReference myRef1 = firebaseDatabase.getReference("orders");

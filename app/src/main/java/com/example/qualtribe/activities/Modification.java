@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.example.qualtribe.R;
 import com.example.qualtribe.models.SubmittedOrder;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,6 +41,7 @@ public class Modification extends AppCompatActivity implements View.OnClickListe
     TextView desc, tvPrice, tvReq, status, newModification;
     Button approve, Modbutton, down;
     String orderID, req, price, Mod, url;
+    String uid;
     int count = 0;
     SubmittedOrder myOrder = new SubmittedOrder();
 
@@ -56,6 +58,8 @@ public class Modification extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modification);
         Intent intent = getIntent();
+        uid = FirebaseAuth.getInstance().getUid();
+
         orderID = intent.getStringExtra("orderID");
         price = intent.getStringExtra("price");
         req = intent.getStringExtra("req");
@@ -130,7 +134,7 @@ public class Modification extends AppCompatActivity implements View.OnClickListe
                             String key = donor.getKey();
                             count = count + 1;
                             myRef4.child(key).removeValue();
-                            SubmittedOrder dd = new SubmittedOrder(d.getRequirements(), d.getOrderId(), d.getBuyerEmail(), d.getAttachmentUrl(),"revision", Mod);
+                            SubmittedOrder dd = new SubmittedOrder(d.getRequirements(), d.getOrderId(), d.getBuyerEmail(), d.getAttachmentUrl(),"revision", Mod, uid);
                             myRef4.push().setValue(dd);
                             Intent myIntent = new Intent(Modification.this, Contract.class);
                             startActivity(myIntent);

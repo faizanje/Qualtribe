@@ -60,6 +60,7 @@ public class order_submit extends AppCompatActivity implements View.OnClickListe
     ActivityOrderSubmitBinding binding;
     String orderId = "";
     String buyerEmail = "";
+    String uid;
     RxPermissions rxPermissions;
     ActivityResultLauncher<Intent> someActivityResultLauncher;
     File selectedFile;
@@ -72,6 +73,7 @@ public class order_submit extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         binding = ActivityOrderSubmitBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        uid = FirebaseAuth.getInstance().getUid();
 
         rxPermissions = new RxPermissions(this);
         orderId = getIntent().getStringExtra(Constants.KEY_ORDER_ID);
@@ -129,6 +131,7 @@ public class order_submit extends AppCompatActivity implements View.OnClickListe
                 }
                 submittedOrder.setRequirements(requirements);
                 submittedOrder.setStatus("delivered");
+                submittedOrder.setSellerID(uid);
                 submitOrder();
             }
         });

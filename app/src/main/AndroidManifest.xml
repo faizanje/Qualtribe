@@ -3,9 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.qualtribe">
 
+    <uses-sdk tools:overrideLibrary="com.github.techinessoverloaded:progress-dialog" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-sdk tools:overrideLibrary="com.github.techinessoverloaded:progress-dialog" />
 
     <application
         android:allowBackup="true"
@@ -14,9 +15,8 @@
         android:roundIcon="@drawable/ic_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.QUALTRIBE">
-        <activity android:name=".activities.seller_contact"></activity>
+        <activity android:name=".activities.seller_contact" />
         <activity android:name=".activities.seller_about" />
-        <activity android:name=".activities.seller_complete_order" />
         <activity android:name=".activities.seller_order" />
         <activity
             android:name=".activities.sellermenu"
