@@ -2,9 +2,10 @@ package com.example.qualtribe.models;
 
 import com.example.qualtribe.activities.seller_order;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class SubmittedOrder {
+public class SubmittedOrder implements Serializable {
 
     String requirements;
     String orderId;
@@ -13,6 +14,15 @@ public class SubmittedOrder {
     String status;
     String modifications;
     String sellerID;
+    String price;
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
 
     public SubmittedOrder(seller_order seller_order, ArrayList<SubmittedOrder> orderArrayList1) {
 

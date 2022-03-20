@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/AProjects/Android Studio Projects/QUALTRIBE/app/src/main/res/layout/activity_buyer_login.xml" value="0.25416666666666665" />
+        <entry key="..\:/AProjects/Android Studio Projects/QUALTRIBE/app/src/main/res/layout/activity_contract.xml" value="0.25416666666666665" />
+        <entry key="..\:/AProjects/Android Studio Projects/QUALTRIBE/app/src/main/res/layout/activity_modification.xml" value="0.25416666666666665" />
+        <entry key="..\:/AProjects/Android Studio Projects/QUALTRIBE/app/src/main/res/layout/activity_order_submit.xml" value="0.2" />
+        <entry key="..\:/AProjects/Android Studio Projects/QUALTRIBE/app/src/main/res/layout/activity_review.xml" value="0.25416666666666665" />
+        <entry key="..\:/AProjects/Android Studio Projects/QUALTRIBE/app/src/main/res/layout/activity_seller__login.xml" value="0.25416666666666665" />
+        <entry key="..\:/AProjects/Android Studio Projects/QUALTRIBE/app/src/main/res/layout/activity_seller_order.xml" value="0.2" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

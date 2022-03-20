@@ -1,6 +1,8 @@
 package com.example.qualtribe.models;
 
-public class Order {
+import java.io.Serializable;
+
+public class Order implements Serializable {
     String email;
     String price;
     String pkgDec;
@@ -8,10 +10,17 @@ public class Order {
     String sellerId;
     String orderId;
     String buyerId;
-    String status;
+    String orderStatus;
 
+    public String getOrderStatus() {
+        return orderStatus;
+    }
 
-    public Order(String email, String price, String pkgDec, String requirements, String sellerId, String orderId, String buyerId, String status) {
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public Order(String email, String price, String pkgDec, String requirements, String sellerId, String orderId, String buyerId, String orderStatus) {
         this.email = email;
         this.price = price;
         this.pkgDec = pkgDec;
@@ -19,15 +28,7 @@ public class Order {
         this.sellerId = sellerId;
         this.orderId = orderId;
         this.buyerId = buyerId;
-        this.status = status;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+        this.orderStatus = orderStatus;
     }
 
     public Order() {

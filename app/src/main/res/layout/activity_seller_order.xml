@@ -40,8 +40,8 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:layout_width="match_parent"
         android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/footer"
         app:layout_constraintEnd_toEndOf="parent"
@@ -50,9 +50,9 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
-            tools:listitem="@layout/layout_orders_item"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            tools:listitem="@layout/layout_orders_item" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
@@ -180,7 +180,6 @@
     <!--    </androidx.cardview.widget.CardView>-->
 
 
-
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView6"
         android:layout_width="95dp"
@@ -265,7 +264,6 @@
             android:textSize="20sp"
             android:textStyle="bold" />
     </androidx.cardview.widget.CardView>
-
 
 
     <RelativeLayout

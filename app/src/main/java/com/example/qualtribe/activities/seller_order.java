@@ -16,6 +16,7 @@ import com.example.qualtribe.adapters.OrdersAdapter;
 import com.example.qualtribe.adapters.OrdersAdapter1;
 import com.example.qualtribe.databinding.ActivitySellerOrderBinding;
 import com.example.qualtribe.models.Order;
+import com.example.qualtribe.models.OrderStatus;
 import com.example.qualtribe.models.SubmittedOrder;
 import com.example.qualtribe.utils.Constants;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,8 +46,9 @@ public class seller_order extends AppCompatActivity implements View.OnClickListe
         setContentView(binding.getRoot());
         myUserId = FirebaseAuth.getInstance().getUid();
         binding.swipeRefreshLayout.setRefreshing(true);
-        current_order_mode = "active";
+        current_order_mode = OrderStatus.ACTIVE.toString();
         orderArrayList = new ArrayList<>();
+        orderArrayList1 = new ArrayList<>();
         adapter = new OrdersAdapter(this, orderArrayList);
         adapter1 = new OrdersAdapter1(this, orderArrayList1);
 
@@ -54,6 +56,7 @@ public class seller_order extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onOrdersClicked(int position, Order orders) {
                 Intent intent = new Intent(seller_order.this, order_submit.class);
+                intent.putExtra(Constants.KEY_ORDER, orders);
                 intent.putExtra(Constants.KEY_ORDER_ID, orders.getOrderId());
                 if (orders.getBuyerId() != null) {
                     intent.putExtra(Constants.KEY_BUYER_EMAIL, orders.getBuyerId());
@@ -113,12 +116,16 @@ public class seller_order extends AppCompatActivity implements View.OnClickListe
                         for (DataSnapshot child : snapshot.getChildren()) {
                             Order order = child.getValue(Order.class);
                             if (order.getSellerId().equals(myUserId)) {
-                                if (order.getStatus().equals(current_order_mode)) {
-                                    orderArrayList.add(order);
+                                if (order.getOrderStatus() != null) {
+                                    if (order.getOrderStatus().equals(OrderStatus.ACTIVE.toString())) {
+                                        orderArrayList.add(order);
+                                    }
                                 }
+
                             }
                         }
                         adapter.notifyDataSetChanged();
+                        binding.recyclerView.setAdapter(adapter);
                     }
 
                     @Override
@@ -127,8 +134,6 @@ public class seller_order extends AppCompatActivity implements View.OnClickListe
                     }
                 });
     }
-
-
 
 
     private void getData1() {
@@ -149,6 +154,7 @@ public class seller_order extends AppCompatActivity implements View.OnClickListe
                             }
                         }
                         adapter1.notifyDataSetChanged();
+                        binding.recyclerView.setAdapter(adapter1);
                     }
 
                     @Override
@@ -157,7 +163,6 @@ public class seller_order extends AppCompatActivity implements View.OnClickListe
                     }
                 });
     }
-
 
 
     @Override
@@ -177,22 +182,32 @@ public class seller_order extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.cardView5:
-                current_order_mode = "completed";
-                getData();
+                current_order_mode = OrderStatus.COMPLETED.toString();
+                binding.swipeRefreshLayout.setRefreshing(true);
+                getData1();
+                break;
+
 
             case R.id.cardView7:
-                current_order_mode = "delivered";
+                current_order_mode = OrderStatus.DELIVERED.toString();
+                binding.swipeRefreshLayout.setRefreshing(true);
                 getData1();
                 break;
 
 
             case R.id.cardView8:
-                current_order_mode = "revision";
-                getData();
+                current_order_mode = OrderStatus.REVISION.toString();
+                binding.swipeRefreshLayout.setRefreshing(true);
+                getData1();
+                break;
+
 
             case R.id.cardView6:
-                current_order_mode = "active";
+                current_order_mode = OrderStatus.ACTIVE.toString();
+                binding.swipeRefreshLayout.setRefreshing(true);
                 getData();
+                break;
+
 
             case R.id.home_ic:
                 startActivity(new Intent(this, Seller_Home.class));

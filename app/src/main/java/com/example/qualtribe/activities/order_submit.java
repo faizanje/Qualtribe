@@ -1,33 +1,27 @@
 package com.example.qualtribe.activities;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityOptionsCompat;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.OpenableColumns;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.example.qualtribe.R;
 import com.example.qualtribe.databinding.ActivityOrderSubmitBinding;
 import com.example.qualtribe.databinding.DialogProgressSimpleBinding;
+import com.example.qualtribe.models.Order;
+import com.example.qualtribe.models.OrderStatus;
 import com.example.qualtribe.models.SubmittedOrder;
 import com.example.qualtribe.utils.Constants;
 import com.example.qualtribe.utils.FileUtils;
@@ -46,17 +40,14 @@ import com.tbruyelle.rxpermissions3.RxPermissions;
 
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 public class order_submit extends AppCompatActivity implements View.OnClickListener {
 
     final CompositeDisposable compositeDisposable = new CompositeDisposable();
-    ImageView message, order, profile;
+    ImageView message, ivOrder, profile;
     ActivityOrderSubmitBinding binding;
     String orderId = "";
     String buyerEmail = "";
@@ -67,6 +58,7 @@ public class order_submit extends AppCompatActivity implements View.OnClickListe
     SubmittedOrder submittedOrder;
     AlertDialog alertDialog;
     DialogProgressSimpleBinding dialogProgressSimpleBinding;
+    Order order;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,19 +70,20 @@ public class order_submit extends AppCompatActivity implements View.OnClickListe
         rxPermissions = new RxPermissions(this);
         orderId = getIntent().getStringExtra(Constants.KEY_ORDER_ID);
         buyerEmail = getIntent().getStringExtra(Constants.KEY_BUYER_EMAIL);
+        order = (Order) getIntent().getSerializableExtra(Constants.KEY_ORDER);
         submittedOrder = new SubmittedOrder(orderId);
         if (buyerEmail != null) {
             submittedOrder.setBuyerEmail(buyerEmail);
         }
-
+        submittedOrder.setPrice(order.getPrice());
         message = findViewById(R.id.msg_ic);
         message.setOnClickListener(this);
 
         profile = findViewById(R.id.profile_ic);
         profile.setOnClickListener(this);
 
-        order = findViewById(R.id.order_ic);
-        order.setOnClickListener(this);
+        ivOrder = findViewById(R.id.order_ic);
+        ivOrder.setOnClickListener(this);
 
         someActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -130,7 +123,7 @@ public class order_submit extends AppCompatActivity implements View.OnClickListe
                     return;
                 }
                 submittedOrder.setRequirements(requirements);
-                submittedOrder.setStatus("delivered");
+                submittedOrder.setStatus(OrderStatus.DELIVERED.toString());
                 submittedOrder.setSellerID(uid);
                 submitOrder();
             }
@@ -211,7 +204,7 @@ public class order_submit extends AppCompatActivity implements View.OnClickListe
     }
 
     private void submitOrderNow() {
-        alertDialog.dismiss();
+        if (alertDialog != null) alertDialog.dismiss();
         FirebaseDatabase.getInstance().getReference()
                 .child("submitted-orders")
                 .push()

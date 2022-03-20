@@ -24,6 +24,11 @@ public class contract_adapter extends RecyclerView.Adapter<contract_adapter.view
 
     ArrayList<Order> orders;
     Context context;
+    OnOrderClickListener onOrderClickListener;
+
+    public void setOnOrderClickListener(OnOrderClickListener onOrderClickListener) {
+        this.onOrderClickListener = onOrderClickListener;
+    }
 
     public contract_adapter(ArrayList<Order> orders, Context context) {
         this.orders = orders;
@@ -43,23 +48,22 @@ public class contract_adapter extends RecyclerView.Adapter<contract_adapter.view
 
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
-        holder.pkg.setText(orders.get(position).getPrice());
-        holder.pkgdec.setText(orders.get(position).getPkgDec());
-        holder.req.setText(orders.get(position).getRequirements());
+        holder.pkg.setText(orders.get(holder.getAdapterPosition()).getPrice());
+        holder.pkgdec.setText(orders.get(holder.getAdapterPosition()).getPkgDec());
+        holder.req.setText(orders.get(holder.getAdapterPosition()).getRequirements());
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, Modification.class);
-                String orderID  = orders.get(position).getOrderId();
-                i.putExtra("orderID", orderID);
-                String price = orders.get(position).getPrice();
-                String req = orders.get(position).getRequirements();
-                i.putExtra("price", price);
-                i.putExtra("req", req);
-                context.startActivity(i);
+                if(onOrderClickListener != null){
+                    onOrderClickListener.onOrderClicked(orders.get(holder.getAdapterPosition()));
+                }
+
             }
         });
+    }
 
+    public interface OnOrderClickListener{
+        void onOrderClicked(Order order);
     }
 
     @Override
