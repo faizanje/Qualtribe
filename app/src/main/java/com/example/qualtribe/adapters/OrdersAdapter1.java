@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.qualtribe.databinding.LayoutOrdersItemBinding;
 import com.example.qualtribe.models.Order;
-import com.example.qualtribe.models.SubmittedOrder;
 import com.google.firebase.database.annotations.NotNull;
 
 
@@ -19,11 +18,11 @@ import java.util.ArrayList;
 
 public class OrdersAdapter1 extends RecyclerView.Adapter<OrdersAdapter1.MyViewHolder> {
 
-    ArrayList<SubmittedOrder> ordersArrayList;
+    ArrayList<Order> ordersArrayList;
     Context context;
     OnOrdersClickListener onOrdersClickListener;
 
-    public OrdersAdapter1(Context context, ArrayList<SubmittedOrder> ordersArrayList) {
+    public OrdersAdapter1(Context context, ArrayList<Order> ordersArrayList) {
         this.context = context;
         this.ordersArrayList = ordersArrayList;
     }
@@ -41,7 +40,7 @@ public class OrdersAdapter1 extends RecyclerView.Adapter<OrdersAdapter1.MyViewHo
 
     @Override
     public void onBindViewHolder(@NotNull MyViewHolder holder, int position) {
-        SubmittedOrder orders = ordersArrayList.get(holder.getAdapterPosition());
+        Order orders = ordersArrayList.get(holder.getAdapterPosition());
 
         holder.binding.tvRequirement.setText(orders.getRequirements());
 
@@ -63,7 +62,7 @@ public class OrdersAdapter1 extends RecyclerView.Adapter<OrdersAdapter1.MyViewHo
     }
 
     public interface OnOrdersClickListener {
-        void onOrdersClicked(int position, SubmittedOrder orders);
+        void onOrdersClicked(int position, Order orders);
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

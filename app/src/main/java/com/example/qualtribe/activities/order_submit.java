@@ -22,7 +22,6 @@ import com.example.qualtribe.databinding.ActivityOrderSubmitBinding;
 import com.example.qualtribe.databinding.DialogProgressSimpleBinding;
 import com.example.qualtribe.models.Order;
 import com.example.qualtribe.models.OrderStatus;
-import com.example.qualtribe.models.SubmittedOrder;
 import com.example.qualtribe.utils.Constants;
 import com.example.qualtribe.utils.FileUtils;
 import com.google.android.gms.tasks.Continuation;
@@ -55,10 +54,11 @@ public class order_submit extends AppCompatActivity implements View.OnClickListe
     RxPermissions rxPermissions;
     ActivityResultLauncher<Intent> someActivityResultLauncher;
     File selectedFile;
-    SubmittedOrder submittedOrder;
+    Order order;
     AlertDialog alertDialog;
     DialogProgressSimpleBinding dialogProgressSimpleBinding;
-    Order order;
+    boolean isRevision = false;
+//    Order order;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,11 +71,18 @@ public class order_submit extends AppCompatActivity implements View.OnClickListe
         orderId = getIntent().getStringExtra(Constants.KEY_ORDER_ID);
         buyerEmail = getIntent().getStringExtra(Constants.KEY_BUYER_EMAIL);
         order = (Order) getIntent().getSerializableExtra(Constants.KEY_ORDER);
-        submittedOrder = new SubmittedOrder(orderId);
-        if (buyerEmail != null) {
-            submittedOrder.setBuyerEmail(buyerEmail);
+
+        if(order.getOrderStatus().equals(OrderStatus.REVISION.toString())){
+            isRevision = true;
+            binding.layoutRevisions.setVisibility(View.VISIBLE);
+            binding.submitReq.setText("Deliver Again");
+            binding.tvBuyerMessage.setText("Buyer's message: " + order.getRevisionMessage());
         }
-        submittedOrder.setPrice(order.getPrice());
+//        order = new Order(orderId);
+//        if (buyerEmail != null) {
+//            order.setBuyerEmail(buyerEmail);
+//        }
+        order.setPrice(order.getPrice());
         message = findViewById(R.id.msg_ic);
         message.setOnClickListener(this);
 
@@ -122,9 +129,10 @@ public class order_submit extends AppCompatActivity implements View.OnClickListe
                     Toast.makeText(order_submit.this, "Requirements cannot be empty", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                submittedOrder.setRequirements(requirements);
-                submittedOrder.setStatus(OrderStatus.DELIVERED.toString());
-                submittedOrder.setSellerID(uid);
+                order.setNoteFromSeller(requirements);
+                order.setOrderStatus(OrderStatus.DELIVERED.toString());
+//                order.setStatus(OrderStatus.DELIVERED.toString());
+                order.setSellerId(uid);
                 submitOrder();
             }
         });
@@ -144,7 +152,7 @@ public class order_submit extends AppCompatActivity implements View.OnClickListe
             StorageReference storageRef = FirebaseStorage
                     .getInstance()
                     .getReference()
-                    .child("submitted-orders")
+                    .child("orders")
                     .child(user.getUid())
                     .child(selectedFile.getName());
 
@@ -174,7 +182,7 @@ public class order_submit extends AppCompatActivity implements View.OnClickListe
                 public void onComplete(@NonNull Task<Uri> task) {
                     if (task.isSuccessful()) {
                         Uri downloadUri = task.getResult();
-                        submittedOrder.setAttachmentUrl(downloadUri.toString());
+                        order.setAttachmentUrl(downloadUri.toString());
                         submitOrderNow();
                         Log.d(Constants.TAG, "onComplete: " + downloadUri);
                     } else {
@@ -206,9 +214,10 @@ public class order_submit extends AppCompatActivity implements View.OnClickListe
     private void submitOrderNow() {
         if (alertDialog != null) alertDialog.dismiss();
         FirebaseDatabase.getInstance().getReference()
-                .child("submitted-orders")
-                .push()
-                .setValue(submittedOrder);
+                .child("orders")
+                .child(order.getOrderId())
+                .setValue(order);
+
         startActivity(new Intent(this, Seller_Home.class));
         finish();
         Toast.makeText(this, "Order submitted", Toast.LENGTH_SHORT).show();

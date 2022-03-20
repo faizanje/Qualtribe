@@ -1,22 +1,16 @@
 package com.example.qualtribe.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.qualtribe.R;
-import com.example.qualtribe.activities.Homepage;
-import com.example.qualtribe.activities.Modification;
 import com.example.qualtribe.models.Order;
-import com.example.qualtribe.models.Sellers;
 
 import java.util.ArrayList;
 

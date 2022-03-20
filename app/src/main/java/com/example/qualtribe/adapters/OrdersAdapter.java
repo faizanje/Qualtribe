@@ -44,7 +44,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.MyViewHold
 
         holder.binding.tvPrice.setText(orders.getPrice());
         holder.binding.tvRequirement.setText(orders.getRequirements());
-
+        holder.binding.tvOrderStatus.setText(orders.getOrderStatus());
         holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

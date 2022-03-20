@@ -15,6 +15,9 @@
         android:roundIcon="@drawable/ic_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.QUALTRIBE">
+        <activity
+            android:name=".activities.ReviseOrderActivity"
+            android:exported="false" />
         <activity android:name=".activities.seller_contact" />
         <activity android:name=".activities.seller_about" />
         <activity android:name=".activities.seller_order" />

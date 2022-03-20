@@ -1,6 +1,5 @@
 package com.example.qualtribe.activities;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,14 +7,12 @@ import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.qualtribe.R;
-import com.example.qualtribe.models.Order;
 import com.example.qualtribe.models.Sellers;
 import com.example.qualtribe.utils.Constants;
 import com.google.android.material.navigation.NavigationView;

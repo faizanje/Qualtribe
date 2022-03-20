@@ -7,10 +7,55 @@ public class Order implements Serializable {
     String price;
     String pkgDec;
     String requirements;
+    String noteFromSeller;
     String sellerId;
     String orderId;
     String buyerId;
     String orderStatus;
+    String attachmentUrl;
+    float rating;
+    String feedback;
+    String revisionMessage;
+
+    public String getRevisionMessage() {
+        return revisionMessage;
+    }
+
+    public void setRevisionMessage(String revisionMessage) {
+        this.revisionMessage = revisionMessage;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
+
+    public String getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
+    }
+
+    public String getNoteFromSeller() {
+        return noteFromSeller;
+    }
+
+    public void setNoteFromSeller(String noteFromSeller) {
+        this.noteFromSeller = noteFromSeller;
+    }
+
+    public String getAttachmentUrl() {
+        return attachmentUrl;
+    }
+
+    public void setAttachmentUrl(String attachmentUrl) {
+        this.attachmentUrl = attachmentUrl;
+    }
 
     public String getOrderStatus() {
         return orderStatus;

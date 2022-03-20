@@ -15,12 +15,9 @@ import com.example.qualtribe.R;
 import com.example.qualtribe.models.Order;
 import com.example.qualtribe.models.OrderStatus;
 import com.example.qualtribe.utils.Constants;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.UUID;
 
 public class PlaceOrder extends AppCompatActivity implements View.OnClickListener {
 

@@ -5,7 +5,7 @@
 //import java.io.Serializable;
 //import java.util.ArrayList;
 //
-//public class SubmittedOrder implements Serializable {
+//public class Order implements Serializable {
 //
 //    String requirements;
 //    String orderId;
@@ -24,7 +24,7 @@
 //        this.price = price;
 //    }
 //
-//    public SubmittedOrder(seller_order seller_order, ArrayList<SubmittedOrder> orderArrayList1) {
+//    public Order(seller_order seller_order, ArrayList<Order> orderArrayList1) {
 //
 //    }
 //
@@ -36,12 +36,12 @@
 //        this.sellerID = sellerID;
 //    }
 //
-//    public SubmittedOrder(String orderId) {
+//    public Order(String orderId) {
 //        this.orderId = orderId;
 //    }
 //
 //
-//    public SubmittedOrder() {
+//    public Order() {
 //
 //    }
 //
@@ -107,7 +107,7 @@
 //        this.status = status;
 //    }
 //
-//    public SubmittedOrder(String requirements, String orderId, String buyerEmail, String attachmentUrl, String status, String modifications, String sellerID) {
+//    public Order(String requirements, String orderId, String buyerEmail, String attachmentUrl, String status, String modifications, String sellerID) {
 //        this.requirements = requirements;
 //        this.orderId = orderId;
 //        this.buyerEmail = buyerEmail;

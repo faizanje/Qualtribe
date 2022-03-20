@@ -1,6 +1,5 @@
 package com.example.qualtribe.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
@@ -14,18 +13,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.qualtribe.R;
 import com.example.qualtribe.databinding.ActivityModificationBinding;
 import com.example.qualtribe.models.Order;
-import com.example.qualtribe.models.SubmittedOrder;
+import com.example.qualtribe.models.OrderStatus;
 import com.example.qualtribe.utils.Constants;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.io.BufferedInputStream;
@@ -41,18 +38,18 @@ public class Modification extends AppCompatActivity implements View.OnClickListe
     ImageView home, message, search, ivOrder, profile, sub_img;
     TextView desc, tvPrice, tvReq, status, newModification;
     Button approve, Modbutton, down;
-//    String orderID, req, price, Mod, url;
+    //    String orderID, req, price, Mod, url;
     String url = "";
     String uid;
     int count = 0;
-//    SubmittedOrder myOrder = new SubmittedOrder();
+    //    SubmittedOrder myOrder = new SubmittedOrder();
     ProgressDialog mProgressDialog;
     Button button;
     ImageView imageView;
     ActivityModificationBinding binding;
+    Order order;
     private ProgressDialog progressDialog;
 
-    SubmittedOrder submittedOrder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +58,7 @@ public class Modification extends AppCompatActivity implements View.OnClickListe
         Intent intent = getIntent();
         uid = FirebaseAuth.getInstance().getUid();
 
-        submittedOrder = (SubmittedOrder) getIntent().getSerializableExtra(Constants.KEY_SUBMITTED_ORDER);
+        order = (Order) getIntent().getSerializableExtra(Constants.KEY_ORDER);
 
         desc = findViewById(R.id.submitted_order_desc);
         sub_img = findViewById(R.id.submitted_order_img);
@@ -74,15 +71,15 @@ public class Modification extends AppCompatActivity implements View.OnClickListe
         down.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                url = submittedOrder.getAttachmentUrl();
+                url = order.getAttachmentUrl();
                 new DownloadFromURL().execute(url);
             }
         });
 
-
+        renderData();
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference myReference = firebaseDatabase.getReference("submitted-orders");
+        DatabaseReference myReference = firebaseDatabase.getReference("orders");
 
 //        myReference.addValueEventListener(new ValueEventListener() {
 //            @Override
@@ -113,12 +110,11 @@ public class Modification extends AppCompatActivity implements View.OnClickListe
 //        });
 
 
-
 //        Modbutton.setOnClickListener(v -> {
 //            Mod = newModification.getText().toString();
 //
 //
-//            DatabaseReference myRef4 = firebaseDatabase.getReference("submitted-orders");
+//            DatabaseReference myRef4 = firebaseDatabase.getReference("orders");
 //
 //            myRef4.addValueEventListener(new ValueEventListener() {
 //                @Override
@@ -175,13 +171,13 @@ public class Modification extends AppCompatActivity implements View.OnClickListe
     }
 
     private void renderData() {
-        desc.setText(submittedOrder.getRequirements());
-        String imageUri = submittedOrder.getAttachmentUrl();
+        desc.setText(order.getRequirements());
+        String imageUri = order.getAttachmentUrl();
         Picasso.with(Modification.this).load(imageUri).into(sub_img);
 
-        tvPrice.setText(submittedOrder.getPrice());
-        tvReq.setText(submittedOrder.getRequirements());
-        status.setText(submittedOrder.getStatus());
+        tvPrice.setText(order.getPrice());
+        tvReq.setText(order.getRequirements());
+        status.setText(order.getOrderStatus());
 
 
     }
@@ -194,10 +190,13 @@ public class Modification extends AppCompatActivity implements View.OnClickListe
                 sendRevision();
                 startActivity(new Intent(this, Homepage.class));
                 finish();
+
                 break;
 
             case R.id.approve:
-                startActivity(new Intent(this, Review.class));
+                Intent intent = new Intent(this, Review.class);
+                intent.putExtra(Constants.KEY_ORDER, order);
+                startActivity(intent);
                 break;
 
             case R.id.home_ic:
@@ -224,7 +223,14 @@ public class Modification extends AppCompatActivity implements View.OnClickListe
     }
 
     private void sendRevision() {
-
+        String revisionText = binding.newModification.getText().toString();
+        order.setRevisionMessage(revisionText);
+        order.setOrderStatus(OrderStatus.REVISION.toString());
+        FirebaseDatabase.getInstance().getReference()
+                .child("orders")
+                .child(order.getOrderId())
+                .setValue(order);
+        Toast.makeText(Modification.this, "Order revision sent", Toast.LENGTH_SHORT).show();
     }
 
     //progress dialog

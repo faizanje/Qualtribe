@@ -2,8 +2,6 @@ package com.example.qualtribe.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -13,19 +11,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.qualtribe.R;
 import com.example.qualtribe.adapters.OrdersAdapter;
 import com.example.qualtribe.adapters.OrdersAdapter1;
-import com.example.qualtribe.adapters.contract_adapter;
-import com.example.qualtribe.adapters.seller_adapter;
 import com.example.qualtribe.databinding.ActivityContractBinding;
-import com.example.qualtribe.models.Order;
 import com.example.qualtribe.models.OrderStatus;
-import com.example.qualtribe.models.Sellers;
-import com.example.qualtribe.models.SubmittedOrder;
+import com.example.qualtribe.models.Order;
 import com.example.qualtribe.utils.Constants;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,13 +35,13 @@ public class Contract extends AppCompatActivity implements View.OnClickListener 
     ImageView home, message, search, profile;
 
 
+    ArrayList<Order> submittedOrders = new ArrayList<>();
     ArrayList<Order> orders = new ArrayList<>();
-    ArrayList<SubmittedOrder> submittedOrders = new ArrayList<>();
     String EMAIL;
     FirebaseAuth m;
     String myUserId;
 //    String current_Order_state;
-//    contract_adapter adapter = new contract_adapter(orders, this);
+//    contract_adapter adapter = new contract_adapter(submittedOrders, this);
 
     OrdersAdapter adapter;
     OrdersAdapter1 submittedOrdersAdapter;
@@ -83,15 +76,8 @@ public class Contract extends AppCompatActivity implements View.OnClickListener 
         profile.setOnClickListener(this);
 
         adapter = new OrdersAdapter(this, orders);
-        submittedOrdersAdapter = new OrdersAdapter1(this, submittedOrders);
+        submittedOrdersAdapter = new OrdersAdapter1(this, orders);
 
-        adapter.setOnOrdersClickListener((position, orders1) -> {
-        });
-        submittedOrdersAdapter.setOnOrdersClickListener((position, submittedOrder) -> {
-            Intent i = new Intent(Contract.this, Modification.class);
-            i.putExtra(Constants.KEY_SUBMITTED_ORDER, submittedOrder);
-            startActivity(i);
-        });
         binding.swipeRefreshLayout.setRefreshing(true);
 
         binding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -104,28 +90,25 @@ public class Contract extends AppCompatActivity implements View.OnClickListener 
         binding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                Toast.makeText(Contract.this, "Tab Selected: " + tab.getPosition(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(Contract.this, "Tab Selected: " + tab.getPosition(), Toast.LENGTH_SHORT).show();
                 binding.swipeRefreshLayout.setRefreshing(true);
                 switch (tab.getPosition()) {
                     case 0:
                         currentOrderMode = OrderStatus.ACTIVE.toString();
-                        getData();
+
                         break;
                     case 1:
                         currentOrderMode = OrderStatus.DELIVERED.toString();
-                        getSubmittedOrdersData();
                         break;
                     case 2:
                         currentOrderMode = OrderStatus.REVISION.toString();
-                        getSubmittedOrdersData();
                         break;
                     case 3:
                         currentOrderMode = OrderStatus.COMPLETED.toString();
-                        getSubmittedOrdersData();
                         break;
-
-
                 }
+                getData();
+                updateOrderClickListener();
             }
 
             @Override
@@ -164,11 +147,14 @@ public class Contract extends AppCompatActivity implements View.OnClickListener 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference myReference = firebaseDatabase.getReference("orders");
 
+        binding.swipeRefreshLayout.setRefreshing(true);
+        orders.clear();
+
         myReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                 for (DataSnapshot seller : snapshot.getChildren()) {
-                    orders.clear();
                     Order o = seller.getValue(Order.class);
                     if (o.getEmail().equals(EMAIL)) {
                         if (o.getOrderStatus() != null) {
@@ -177,23 +163,45 @@ public class Contract extends AppCompatActivity implements View.OnClickListener 
                             }
                         }
                     }
-                    adapter.notifyDataSetChanged();
-                    binding.swipeRefreshLayout.setRefreshing(false);
-                    binding.orderRec.setAdapter(adapter);
                 }
+
+                adapter.notifyDataSetChanged();
+                binding.swipeRefreshLayout.setRefreshing(false);
+                binding.orderRec.setAdapter(adapter);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                adapter.notifyDataSetChanged();
+                binding.swipeRefreshLayout.setRefreshing(false);
             }
         });
 
     }
 
+    private void updateOrderClickListener() {
+        if(currentOrderMode.equals(OrderStatus.ACTIVE.toString())){
+            adapter.setOnOrdersClickListener(null);
+        }else if(currentOrderMode.equals(OrderStatus.DELIVERED.toString())){
+            adapter.setOnOrdersClickListener(new OrdersAdapter.OnOrdersClickListener() {
+                @Override
+                public void onOrdersClicked(int position, Order submittedOrders) {
+                    Intent i = new Intent(Contract.this, Modification.class);
+                    i.putExtra(Constants.KEY_ORDER, submittedOrders);
+                    startActivity(i);
+                }
+            });
+        }else if(currentOrderMode.equals(OrderStatus.REVISION.toString())){
+            adapter.setOnOrdersClickListener(null);
+        }else if(currentOrderMode.equals(OrderStatus.COMPLETED.toString())){
+            adapter.setOnOrdersClickListener(null);
+        }
+
+    }
+
     public void getSubmittedOrdersData() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference myReference = firebaseDatabase.getReference("submitted-orders");
+        DatabaseReference myReference = firebaseDatabase.getReference("orders");
 
 
         myReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -201,12 +209,12 @@ public class Contract extends AppCompatActivity implements View.OnClickListener 
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Toast.makeText(Contract.this, "OnDataChange", Toast.LENGTH_SHORT).show();
                 for (DataSnapshot seller : snapshot.getChildren()) {
-                    submittedOrders.clear();
-                    SubmittedOrder o = seller.getValue(SubmittedOrder.class);
-                    if (o.getBuyerEmail().equals(EMAIL)) {
-                        if (o.getStatus() != null) {
-                            if (o.getStatus().equals(currentOrderMode)) {
-                                submittedOrders.add(o);
+                    orders.clear();
+                    Order o = seller.getValue(Order.class);
+                    if (o.getBuyerId().equals(FirebaseAuth.getInstance().getUid())) {
+                        if (o.getOrderStatus() != null) {
+                            if (o.getOrderStatus().equals(currentOrderMode)) {
+                                orders.add(o);
                             }
                         }
                     }
