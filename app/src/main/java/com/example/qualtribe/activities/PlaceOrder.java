@@ -13,13 +13,11 @@ import android.widget.Toast;
 
 import com.example.qualtribe.R;
 import com.example.qualtribe.models.Order;
+import com.example.qualtribe.models.OrderStatus;
 import com.example.qualtribe.utils.Constants;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.UUID;
 
 public class PlaceOrder extends AppCompatActivity implements View.OnClickListener {
 
@@ -51,13 +49,13 @@ public class PlaceOrder extends AppCompatActivity implements View.OnClickListene
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String uniqueID = UUID.randomUUID().toString();
+//                String uniqueID = UUID.randomUUID().toString();
                 String r = req.getText().toString();
-                Order order = new Order(EMAIL, PRICE, PKGDESC, r, sellerID, uniqueID, FirebaseAuth.getInstance().getCurrentUser().getEmail(), "active");
-                Log.i("WISHA", "onClick: " + order);
+//                Log.i("WISHA", "onClick: " + order);
                 FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                DatabaseReference myRef1 = firebaseDatabase.getReference("orders");
-                myRef1.push().setValue(order);
+                DatabaseReference myRef1 = firebaseDatabase.getReference("orders").push();
+                Order order = new Order(EMAIL, PRICE, PKGDESC, r, sellerID, myRef1.getKey(), FirebaseAuth.getInstance().getCurrentUser().getEmail(), OrderStatus.ACTIVE.toString());
+                myRef1.setValue(order);
                 Toast.makeText(PlaceOrder.this, "Order has been placed successfully!", Toast.LENGTH_SHORT).show();
                 Intent intent1 = new Intent(PlaceOrder.this, Contract.class);
                 startActivity(intent1);

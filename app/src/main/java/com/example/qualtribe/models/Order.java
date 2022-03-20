@@ -1,17 +1,71 @@
 package com.example.qualtribe.models;
 
-public class Order {
+import java.io.Serializable;
+
+public class Order implements Serializable {
     String email;
     String price;
     String pkgDec;
     String requirements;
+    String noteFromSeller;
     String sellerId;
     String orderId;
     String buyerId;
-    String status;
+    String orderStatus;
+    String attachmentUrl;
+    float rating;
+    String feedback;
+    String revisionMessage;
 
+    public String getRevisionMessage() {
+        return revisionMessage;
+    }
 
-    public Order(String email, String price, String pkgDec, String requirements, String sellerId, String orderId, String buyerId, String status) {
+    public void setRevisionMessage(String revisionMessage) {
+        this.revisionMessage = revisionMessage;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
+
+    public String getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
+    }
+
+    public String getNoteFromSeller() {
+        return noteFromSeller;
+    }
+
+    public void setNoteFromSeller(String noteFromSeller) {
+        this.noteFromSeller = noteFromSeller;
+    }
+
+    public String getAttachmentUrl() {
+        return attachmentUrl;
+    }
+
+    public void setAttachmentUrl(String attachmentUrl) {
+        this.attachmentUrl = attachmentUrl;
+    }
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public Order(String email, String price, String pkgDec, String requirements, String sellerId, String orderId, String buyerId, String orderStatus) {
         this.email = email;
         this.price = price;
         this.pkgDec = pkgDec;
@@ -19,15 +73,7 @@ public class Order {
         this.sellerId = sellerId;
         this.orderId = orderId;
         this.buyerId = buyerId;
-        this.status = status;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+        this.orderStatus = orderStatus;
     }
 
     public Order() {

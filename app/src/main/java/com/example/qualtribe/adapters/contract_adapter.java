@@ -1,22 +1,16 @@
 package com.example.qualtribe.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.qualtribe.R;
-import com.example.qualtribe.activities.Homepage;
-import com.example.qualtribe.activities.Modification;
 import com.example.qualtribe.models.Order;
-import com.example.qualtribe.models.Sellers;
 
 import java.util.ArrayList;
 
@@ -24,6 +18,11 @@ public class contract_adapter extends RecyclerView.Adapter<contract_adapter.view
 
     ArrayList<Order> orders;
     Context context;
+    OnOrderClickListener onOrderClickListener;
+
+    public void setOnOrderClickListener(OnOrderClickListener onOrderClickListener) {
+        this.onOrderClickListener = onOrderClickListener;
+    }
 
     public contract_adapter(ArrayList<Order> orders, Context context) {
         this.orders = orders;
@@ -43,23 +42,22 @@ public class contract_adapter extends RecyclerView.Adapter<contract_adapter.view
 
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
-        holder.pkg.setText(orders.get(position).getPrice());
-        holder.pkgdec.setText(orders.get(position).getPkgDec());
-        holder.req.setText(orders.get(position).getRequirements());
+        holder.pkg.setText(orders.get(holder.getAdapterPosition()).getPrice());
+        holder.pkgdec.setText(orders.get(holder.getAdapterPosition()).getPkgDec());
+        holder.req.setText(orders.get(holder.getAdapterPosition()).getRequirements());
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, Modification.class);
-                String orderID  = orders.get(position).getOrderId();
-                i.putExtra("orderID", orderID);
-                String price = orders.get(position).getPrice();
-                String req = orders.get(position).getRequirements();
-                i.putExtra("price", price);
-                i.putExtra("req", req);
-                context.startActivity(i);
+                if(onOrderClickListener != null){
+                    onOrderClickListener.onOrderClicked(orders.get(holder.getAdapterPosition()));
+                }
+
             }
         });
+    }
 
+    public interface OnOrderClickListener{
+        void onOrderClicked(Order order);
     }
 
     @Override

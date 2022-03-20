@@ -61,6 +61,7 @@
             android:text="Please login to continue using app" />
 
         <EditText
+            android:text="@string/email_buyer"
             android:id="@+id/lEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -72,6 +73,7 @@
             android:textSize="16sp" />
 
         <EditText
+            android:text="@string/pass_buyer"
             android:id="@+id/lPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
