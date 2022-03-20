@@ -34,9 +34,9 @@ public class seller_order extends AppCompatActivity implements View.OnClickListe
     String myUserId;
     ActivitySellerOrderBinding binding;
     ArrayList<Order> orderArrayList;
-    ArrayList<SubmittedOrder> orderArrayList1;
+//    ArrayList<SubmittedOrder> orderArrayList1;
     OrdersAdapter adapter;
-    OrdersAdapter1 adapter1;
+//    OrdersAdapter1 adapter1;
     String current_order_mode;
 
     @Override
@@ -48,9 +48,9 @@ public class seller_order extends AppCompatActivity implements View.OnClickListe
         binding.swipeRefreshLayout.setRefreshing(true);
         current_order_mode = OrderStatus.ACTIVE.toString();
         orderArrayList = new ArrayList<>();
-        orderArrayList1 = new ArrayList<>();
+//        orderArrayList1 = new ArrayList<>();
         adapter = new OrdersAdapter(this, orderArrayList);
-        adapter1 = new OrdersAdapter1(this, orderArrayList1);
+//        adapter1 = new OrdersAdapter1(this, orderArrayList1);
 
         adapter.setOnOrdersClickListener(new OrdersAdapter.OnOrdersClickListener() {
             @Override
